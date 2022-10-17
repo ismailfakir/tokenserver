@@ -1,11 +1,14 @@
 <template>
   <v-data-table
+    :page="page"
+    :pageCount="numberOfPages"
     :headers="headers"
     :items="users"
     :options.sync="options"
+    :server-items-length="totalUsers"
     :loading="loading"
     :search="search"
-    sort-by="calories"
+    sort-by="userName"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -108,7 +111,7 @@ import axios from "axios";
 // https://dev.to/instantwebtoolsnet/datatables-with-vuejs-vuetify-pagination-rest-api-3jji
 export default {
   data: () => ({
-    page: 0,
+    page: 1,
     totalUsers: 0,
     numberOfPages: 0,
     users: [],
@@ -311,7 +314,7 @@ export default {
       let pageNumber = page - 1;
       axios
         .get(
-          "http://localhost:8989/api/users?size=" +
+          "http://localhost:8989/api/users/paged?size=" +
             itemsPerPage +
             "&page=" +
             pageNumber
@@ -320,9 +323,10 @@ export default {
           //Then injecting the result to datatable parameters.
           console.log(response.data);
           this.loading = false;
-          this.users = response.data;
-          this.totalUsers = response.data.totalUsers;
+          this.users = response.data.data;
+          this.totalUsers = response.data.totalItems;
           this.numberOfPages = response.data.totalPages;
+          //this.page = response.data.currentPage;
         });
     },
 

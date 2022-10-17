@@ -9,6 +9,9 @@ import net.cloudcentrik.autolink.tokenserver.utils.TokenGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,12 +29,20 @@ public class UserServiceImple implements UserService {
     @Override
     public List<User> getAllUsers() throws UnknownError {
         LOG.info("-- // -- getting all users from database");
-        List<User> todos = userRepository.findAll();
-        if (todos.size() > 0) {
-            return todos;
+        List<User> users = userRepository.findAll();
+        if (users.size() > 0) {
+            return users;
         }else {
             return new ArrayList<User>();
         }
+    }
+
+    @Override
+    public Page<User> getAllUsersPaged(int page, int size) throws UnknownError {
+        LOG.info("-- // -- getting all users from database page:{},size:{}",page,size);
+        Pageable paging = PageRequest.of(page, size);
+        Page<User> users = userRepository.findAll(paging);
+        return users;
     }
 
     @Override
