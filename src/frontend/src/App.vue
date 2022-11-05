@@ -30,8 +30,8 @@ export default {
   },
   data: () => ({ drawer: null }),
   computed: {
-    isShowavigation() { //do not show navigation on login
-        return this.$route.name != "login";
+    isShowavigation() { //do not show navigation on login or notfound
+        return this.$route.name != "login" && this.$route.name != "notfound";
     }
   },
 }

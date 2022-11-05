@@ -42,7 +42,7 @@
                               {{toggleMessage}}  
                            </div>
                       </form>
-                      <ServerInfo />
+                      <!-- <ServerInfo /> -->
                      </v-card-text>
                   </v-card>
                 
@@ -55,12 +55,12 @@
 
 <script>
 // @ is an alias to /src
-import ServerInfo from '@/components/ServerInfo.vue'
+//import ServerInfo from '@/components/ServerInfo.vue'
 export default {
   name: "App",
-  components: {
+  /* components: {
     ServerInfo
-  },
+  }, */
   data() {
     return {
       username: "",
